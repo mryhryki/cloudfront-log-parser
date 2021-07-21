@@ -3,44 +3,53 @@ import { LogLine } from "./log";
 /**
  * CloudFront のログが出力されているバケット
  */
-export const S3Bucket = '(CloudWatch Log Bucket)'
+export const S3Bucket = "your-bucket-name";
 
 /**
  * CloudFront のログファイルが存在するプレフィックス
  */
-export const S3Prefix = '(CloudWatch Log Prefix)'
+export const S3Prefix = "your/cloudfront/log/prefix/";
 
 /**
- * 集計結果（基本的に編集しない）
+ * S3オブジェクトが分析対象か判定するフィルタ
  */
-export const parseResult: ParseResult = {};
+export const s3ObjectFilter = (key: string): boolean => {
+  // オブジェクトのキーが `.gz` で終わるオブジェクトのみ分析する例
+  return key.endsWith(".gz");
+};
 
 /**
  * 集計結果の型定義
  */
-interface ParseResult {
+export interface ParseResult {
+  // 日付をキー、リクエストされた回数を値として持つ構造の例
   [date: string]: /* request count */number
 }
 
 /**
- * １行単位でパースしたログデータに何らかの処理をするための関数
+ * パースしたログデータに１行単位で処理をするための関数
+ *
+ * ここに集計処理を入れて `parseResult` に値をセットする
  *
  * @param logLine １行単位でパースしたログデータ
+ * @param result 集計結果（必要に応じて直接内容を編集する）
  */
-export const parseLogLine = (logLine: LogLine): void => {
-  // ここに集計処理を入れて `parseResult` に値をセットする
-  // 以下はパスごとのリクエスト回数をカウントする例
+export const parseLogLine = (logLine: LogLine, result: ParseResult): void => {
+  // パスごとのリクエスト回数をカウントする例
   const { csUriStem } = logLine;
-  parseResult[csUriStem] ??= 0;
-  parseResult[csUriStem] += 1;
+  result[csUriStem] ??= 0;
+  result[csUriStem] += 1;
 };
 
 /**
  * 集計結果の編集
  *
- * @param result 最終的な出力データ
+ * ここでデータの整形や形式の変更、フィルタリングやソートなど必要な処理があれば実行する。
+ * null を返却するとファイル出力されません。
+ *
+ * @param result 集計結果
+ * @return 最終的な出力内容
  */
 export const editResult = (result: ParseResult): any => {
-  // ここでデータの整形や形式の変更、フィルタリングやソートなど必要な処理があれば実行する
-  return result
-}
+  return result;
+};

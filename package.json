@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "build": "esbuild --bundle src/index.ts --outfile=index.js --minify --platform=node --target=node14",
+    "check": "tsc --noEmit",
     "init": "test -f src/config.ts || cp src/config{.template,}.ts",
     "run": "node index.js",
-    "start": "run-s build run"
+    "start": "run-s init check build run"
   },
   "dependencies": {
     "@types/aws-sdk": "^2.7.0",

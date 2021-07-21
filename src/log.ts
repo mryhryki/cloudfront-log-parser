@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import { ungzip } from "node-gzip";
+import { stderr } from "./util";
 
 // https://docs.aws.amazon.com/ja_jp/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html#access-logs-analyzing
 export interface LogLine {
@@ -39,9 +40,8 @@ export interface LogLine {
 }
 
 export const parseLogFile = async (logFilePath: string, callback: (log: LogLine) => void) => {
-  console.log(`Parse: ${logFilePath}`);
+  stderr(`Parse: ${logFilePath}`);
   const logBuffer = await fs.readFile(logFilePath).then(ungzip);
-  // const logBuffer = await ungzip(logGzData)
 
   let position = -1;
   while (true) {
