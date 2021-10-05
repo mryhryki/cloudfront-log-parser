@@ -1,9 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
 import { syncLogs } from "./s3";
-import { S3Bucket, S3Prefix, parseLogLine, editResult } from "./config";
+import { S3Bucket, S3Prefix, parseLogLine, editResult, ParseResult } from "./config";
 import { LogLine, parseLogFile } from "./log";
-import { ParseResult } from "./config.template";
 import { stderr } from "./util";
 
 const DataDirectory = path.resolve(__dirname, ".data");
