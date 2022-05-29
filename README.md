@@ -33,3 +33,9 @@ $ npm run init
 ```bash
 $ npm start
 ```
+
+### 型チェック
+
+```bash
+$ npm start
+```

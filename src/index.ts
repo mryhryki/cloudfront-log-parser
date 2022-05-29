@@ -7,7 +7,7 @@ import { stderr } from "./util";
 
 const DataDirectory = path.resolve(__dirname, ".data");
 const LogDirectory = path.resolve(DataDirectory, "cloudfront_logs");
-const ResultFilePath = path.resolve(DataDirectory, "result.json");
+const ResultFilePath = path.resolve(DataDirectory, "result.txt");
 
 const main = async () => {
   let totalBytes = 0;
@@ -29,7 +29,7 @@ const main = async () => {
   stderr("")
   const result = editResult(parseResult);
   if (result != null) {
-    await fs.writeFile(ResultFilePath, JSON.stringify(result, null, 2));
+    await fs.writeFile(ResultFilePath, result);
     stderr(`Write result to ${ResultFilePath}`)
   }
 

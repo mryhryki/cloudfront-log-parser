@@ -3,11 +3,9 @@
   "author": "mryhryki",
   "private": true,
   "scripts": {
-    "build": "esbuild --bundle src/index.ts --outfile=index.js --minify --platform=node --target=node14",
+    "start": "esbuild --bundle --minify --platform=node --target=node14 src/index.ts | node",
     "check": "tsc --noEmit",
-    "init": "test -f src/config.ts || cp src/config{.template,}.ts",
-    "run": "node index.js",
-    "start": "run-s init check build run"
+    "init": "test -f src/config.ts || cp src/config{.template,}.ts"
   },
   "dependencies": {
     "@types/aws-sdk": "^2.7.0",

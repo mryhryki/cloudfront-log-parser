@@ -22,7 +22,7 @@ export const s3ObjectFilter = (key: string): boolean => {
  * 集計結果の型定義
  */
 export interface ParseResult {
-  // 日付をキー、リクエストされた回数を値として持つ構造の例
+  // パスをキー、リクエストされた回数を値として持つ構造の例
   [date: string]: /* request count */number
 }
 
@@ -48,8 +48,8 @@ export const parseLogLine = (logLine: LogLine, result: ParseResult): void => {
  * null を返却するとファイル出力されません。
  *
  * @param result 集計結果
- * @return 最終的な出力内容
+ * @return string 最終的な出力内容
  */
-export const editResult = (result: ParseResult): any => {
-  return result;
+export const editResult = (result: ParseResult): string => {
+  return JSON.stringify(result, null, 2);
 };
