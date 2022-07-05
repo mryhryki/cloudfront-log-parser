@@ -37,5 +37,5 @@ $ npm start
 ### 型チェック
 
 ```bash
-$ npm start
+$ npm run check
 ```
