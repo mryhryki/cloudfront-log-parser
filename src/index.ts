@@ -16,6 +16,8 @@ const main = async () => {
   const parseResult: ParseResult = {};
   const parseLogFileCallback = (log: LogLine) => parseLogLine(log, parseResult)
 
+  await fs.mkdir(LogDirectory, { recursive: true })
+
   const logFilesPaths = await syncLogs(S3Bucket, S3Prefix, LogDirectory);
   for await (const filePath of logFilesPaths) {
     await parseLogFile(filePath, parseLogFileCallback);
