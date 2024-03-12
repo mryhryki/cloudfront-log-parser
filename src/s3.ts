@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import { S3 } from "aws-sdk";
 import { ListObjectsV2Output, Object } from "aws-sdk/clients/s3";
-import { s3ObjectFilter } from "./config.template";
+import { s3ObjectFilter } from "./config";
 import { stderr } from "./util";
 
 const s3 = new S3({ apiVersion: "2006-03-01" });
