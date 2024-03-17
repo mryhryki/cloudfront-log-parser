@@ -10,6 +10,10 @@ export const getCountry = (location: string): string => {
   return EdgeLocationMapping[location.substring(0, 3)]?.country ?? "Unknown";
 }
 
+export const getCity = (location: string): string => {
+  return EdgeLocationMapping[location.substring(0, 3)]?.city ?? "Unknown";
+}
+
 const EdgeLocationMapping: Record</* airport: */ string, LocationData> = {
     "EZE": {
       "country": "Argentina",
