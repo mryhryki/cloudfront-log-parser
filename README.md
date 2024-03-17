@@ -28,10 +28,16 @@ $ npm run init
 - `parseLogLine`: ログファイル内の１行ごとに呼ばれる集計用関数
 - `editResult`: 集計結果（`ParseResult`）の編集関数
 
-### 実行
+### ログの同期
 
 ```bash
-$ npm start
+$ npm run sync-logs
+```
+
+### パースの実行
+
+```bash
+$ npm run parse-logs
 ```
 
 ### 型チェック

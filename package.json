@@ -3,7 +3,8 @@
   "author": "mryhryki",
   "private": true,
   "scripts": {
-    "start": "esbuild --bundle --minify --platform=node --target=node16 src/index.ts | node",
+    "sync-logs": "esbuild --bundle --minify --platform=node --target=node16 src/sync-logs.ts | node",
+    "parse-logs": "esbuild --bundle --minify --platform=node --target=node16 src/parse-logs.ts | node",
     "check": "tsc --noEmit",
     "init": "test -f src/config.ts || cp src/config{.template,}.ts"
   },
