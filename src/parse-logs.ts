@@ -1,29 +1,29 @@
 import fs from "fs/promises";
 import path from "path";
-import { syncLogs } from "./s3";
-import { S3Bucket, S3Prefix, parseLogLine, editResult, ParseResult, getInitialParseResult } from "./config";
+import { editResult, getInitialParseResult, parseLogLine, ParseResult, s3ObjectFilter } from "./config";
 import { LogLine, parseLogFile } from "./log";
-import { stderr } from "./util";
+import { getLogDirectory, getResultFilePath, stderr } from "./util";
 
-const DataDirectory = path.resolve(__dirname, ".data");
-const LogDirectory = path.resolve(DataDirectory, "cloudfront_logs");
-const ResultFilePath = path.resolve(DataDirectory, "result.txt");
-
-const main = async () => {
+const parseLogs = async () => {
   let totalBytes = 0;
   let totalFiles = 0;
+
+  const LogDirectory = getLogDirectory();
+  const ResultFilePath = getResultFilePath();
+
   const startTime = new Date().getTime();
   const parseResult: ParseResult = getInitialParseResult();
   const parseLogFileCallback = (log: LogLine) => parseLogLine(log, parseResult)
 
-  await fs.mkdir(LogDirectory, { recursive: true })
 
-  const logFilesPaths = await syncLogs(S3Bucket, S3Prefix, LogDirectory);
+  const logFilesPaths = (await fs.readdir(LogDirectory)).filter(s3ObjectFilter);
+
   for await (const filePath of logFilesPaths) {
-    await parseLogFile(filePath, parseLogFileCallback);
-    const stat = await fs.stat(filePath);
+    const absoluteFilePath = path.resolve(LogDirectory, filePath);
+    await parseLogFile(absoluteFilePath, parseLogFileCallback);
+    totalFiles += 1;
+    const stat = await fs.stat(absoluteFilePath);
     if (stat != null) {
-      totalFiles += 1
       totalBytes += stat.size
     }
   }
@@ -39,4 +39,4 @@ const main = async () => {
   stderr(`Parsed: ${(endTime - startTime) / 1000} sec, ${totalFiles} files, ${totalBytes} bytes`)
 };
 
-main();
+parseLogs();
