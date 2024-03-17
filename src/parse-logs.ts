@@ -1,8 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
 import { editResult, getInitialParseResult, parseLogLine, ParseResult, s3ObjectFilter } from "./config";
-import { LogLine, parseLogFile } from "./log";
-import { getLogDirectory, getResultFilePath, stderr } from "./util";
+import { LogLine, parseLogFile } from "./lib/log";
+import { getLogDirectory, getResultFilePath, stderr } from "./lib/util";
 
 const parseLogs = async () => {
   let totalBytes = 0;

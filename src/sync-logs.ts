@@ -3,7 +3,7 @@ import { ListObjectsV2Output } from "aws-sdk/clients/s3";
 import fs from "fs/promises";
 import path from "path";
 import { S3Bucket, s3ObjectFilter, S3Prefix } from "./config";
-import { getLogDirectory, stderr } from "./util";
+import { getLogDirectory, stderr } from "./lib/util";
 
 const s3 = new S3({ apiVersion: "2006-03-01" });
 

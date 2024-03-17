@@ -1,4 +1,4 @@
-import { LogLine } from "./log";
+import { LogLine } from "./lib/log";
 
 /**
  * CloudFront のログが出力されているバケット
