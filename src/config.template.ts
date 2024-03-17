@@ -25,6 +25,7 @@ export interface ParseResult {
   // パスをキー、リクエストされた回数を値として持つ構造の例
   [date: string]: /* request count */number
 }
+export const getInitialParseResult = (): ParseResult => ({})
 
 /**
  * パースしたログデータに１行単位で処理をするための関数

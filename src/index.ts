@@ -1,7 +1,7 @@
 import fs from "fs/promises";
 import path from "path";
 import { syncLogs } from "./s3";
-import { S3Bucket, S3Prefix, parseLogLine, editResult, ParseResult } from "./config";
+import { S3Bucket, S3Prefix, parseLogLine, editResult, ParseResult, getInitialParseResult } from "./config";
 import { LogLine, parseLogFile } from "./log";
 import { stderr } from "./util";
 
@@ -13,7 +13,7 @@ const main = async () => {
   let totalBytes = 0;
   let totalFiles = 0;
   const startTime = new Date().getTime();
-  const parseResult: ParseResult = {};
+  const parseResult: ParseResult = getInitialParseResult();
   const parseLogFileCallback = (log: LogLine) => parseLogLine(log, parseResult)
 
   await fs.mkdir(LogDirectory, { recursive: true })
